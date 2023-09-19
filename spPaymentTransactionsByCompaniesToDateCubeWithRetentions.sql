@@ -479,7 +479,7 @@ PRINT ('7.1-UUMTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date : '+c
 		LEFT JOIN  (
 					SELECT MAX(UUMTD) UUMTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND UUMTD IS NOT NULL
+					WHERE DateHour < @DailySP AND UUMTD IS NOT NULL AND DateHour >= @Param_MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId AND /*K.Product = L.Product AND*/ K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -492,7 +492,7 @@ PRINT ('8.1-TxCountMTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date 
 		LEFT JOIN  (
 					SELECT MAX(TxCountMTD) TxCountMTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxCountMTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxCountMTD IS NOT NULL AND DateHour >= @Param_MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -505,7 +505,7 @@ PRINT ('9.1-TxVolumeMTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date
 		LEFT JOIN  (
 					SELECT MAX(TxVolumeMTD) TxVolumeMTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxVolumeMTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxVolumeMTD IS NOT NULL AND DateHour >= @Param_MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -518,7 +518,7 @@ PRINT ('10.1-UUQTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date : '+
 		LEFT JOIN  (
 					SELECT MAX(UUQTD) UUQTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND UUQTD IS NOT NULL
+					WHERE DateHour < @DailySP AND UUQTD IS NOT NULL AND DateHour >= @Param_QTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -531,7 +531,7 @@ PRINT ('11.1-TxCountQTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date
 		LEFT JOIN  (
 					SELECT MAX(TxCountQTD) TxCountQTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxCountQTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxCountQTD IS NOT NULL AND DateHour >= @Param_QTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -544,7 +544,7 @@ PRINT ('12.1-TxVolumeQTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Dat
 		LEFT JOIN  (
 					SELECT MAX(TxVolumeQTD) TxVolumeQTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxVolumeQTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxVolumeQTD IS NOT NULL AND DateHour >= @Param_QTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -557,7 +557,7 @@ PRINT ('13.1-UUSemiYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date 
 		LEFT JOIN  (
 					SELECT MAX(UUSemiYTD) UUSemiYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND UUSemiYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND UUSemiYTD IS NOT NULL AND DateHour >= @Param_SemiYTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -570,7 +570,7 @@ PRINT ('14.1-TxCountSemiYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP 
 		LEFT JOIN  (
 					SELECT MAX(TxCountSemiYTD) TxCountSemiYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxCountSemiYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxCountSemiYTD IS NOT NULL AND DateHour >= @Param_SemiYTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -583,7 +583,7 @@ PRINT ('15.1-TxVolumeSemiYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP
 		LEFT JOIN  (
 					SELECT MAX(TxVolumeSemiYTD) TxVolumeSemiYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxVolumeSemiYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxVolumeSemiYTD IS NOT NULL AND DateHour >= @Param_SemiYTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -596,7 +596,7 @@ PRINT ('16.1-UUYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date : '	
 		LEFT JOIN  (
 					SELECT MAX(UUYTD) UUYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND UUYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND UUYTD IS NOT NULL AND DateHour >= @Param_YTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -609,7 +609,7 @@ PRINT ('17.1-TxCountYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date
 		LEFT JOIN  (
 					SELECT MAX(TxCountYTD) TxCountYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxCountYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxCountYTD IS NOT NULL AND DateHour >= @Param_YTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -622,7 +622,7 @@ PRINT ('18.1-TxVolumeYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Dat
 		LEFT JOIN  (
 					SELECT MAX(TxVolumeYTD) TxVolumeYTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxVolumeYTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxVolumeYTD IS NOT NULL AND DateHour >= @Param_YTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -640,7 +640,7 @@ PRINT ('19.1-AvgAgeMTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date 
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgAgeMTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgAgeMTD IS NOT NULL AND DateHour >= @Param_MTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -659,7 +659,7 @@ PRINT ('20.1-AvgAgeQTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date 
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgAgeQTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgAgeQTD IS NOT NULL AND DateHour >= @Param_QTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -678,7 +678,7 @@ PRINT ('21.1-AvgAgeSemiYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP D
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgAgeSemiYTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgAgeSemiYTD IS NOT NULL AND DateHour >= @Param_SemiYTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -697,7 +697,7 @@ PRINT ('22.1-AvgAgeYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date 
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgAgeYTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgAgeYTD IS NOT NULL AND DateHour >= @Param_YTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -716,7 +716,7 @@ PRINT ('23.1-AvgTenureByYearMTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'Dail
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgTenureByYearMTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgTenureByYearMTD IS NOT NULL AND DateHour >= @Param_MTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -735,7 +735,7 @@ PRINT ('24.1-AvgTenureByYearQTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'Dail
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgTenureByYearQTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgTenureByYearQTD IS NOT NULL AND DateHour >= @Param_QTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -754,7 +754,7 @@ PRINT ('25.1-AvgTenureByYearSemiYTD LOOP SETTINGS PREPARING - STARTED - FOR' + '
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgTenureByYearSemiYTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgTenureByYearSemiYTD IS NOT NULL AND DateHour >= @Param_SemiYTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -773,7 +773,7 @@ PRINT ('26.1-AvgTenureByYearYTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'Dail
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgTenureByYearYTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgTenureByYearYTD IS NOT NULL AND DateHour >= @Param_YTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -793,7 +793,7 @@ PRINT ('27.1-AvgTenureByYear2MTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'Dai
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgTenureByYear2MTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgTenureByYear2MTD IS NOT NULL AND DateHour >= @Param_2MTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -812,7 +812,7 @@ PRINT ('28.1-AvgAge2MTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date
 						(
 							SELECT MAX(DateHour) MaxDateHour,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 							FROM #ReadyToUpdateData
-							WHERE DateHour < @DailySP AND AvgAge2MTD IS NOT NULL
+							WHERE DateHour < @DailySP AND AvgAge2MTD IS NOT NULL AND DateHour >= @Param_2MTDIndicator
 							GROUP BY CompanyId/*,Product*/,PaymentType
 						) M ON M.MaxDateHour = P.DateHour AND M.PaymentType = P.PaymentType AND M.CompanyId = P.CompanyId
 					) L
@@ -826,7 +826,7 @@ PRINT ('29.1-TxCount2MTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Dat
 		LEFT JOIN  (
 					SELECT MAX(TxCount2MTD) TxCount2MTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxCount2MTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxCount2MTD IS NOT NULL AND DateHour >= @Param_2MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -839,7 +839,7 @@ PRINT ('30.1-TxVolume2MTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Da
 		LEFT JOIN  (
 					SELECT MAX(TxVolume2MTD) TxVolume2MTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND TxVolume2MTD IS NOT NULL
+					WHERE DateHour < @DailySP AND TxVolume2MTD IS NOT NULL AND DateHour >= @Param_2MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
@@ -852,7 +852,7 @@ PRINT ('31.1-UU2MTD LOOP SETTINGS PREPARING - STARTED - FOR' + 'DailySP Date : '
 		LEFT JOIN  (
 					SELECT MAX(UU2MTD) UU2MTD,CompanyId/*,Product*/,PaymentType /*,CustomerType*/
 					FROM #ReadyToUpdateData
-					WHERE DateHour < @DailySP AND UU2MTD IS NOT NULL
+					WHERE DateHour < @DailySP AND UU2MTD IS NOT NULL AND DateHour >= @Param_2MTDIndicator
 					GROUP BY CompanyId/*,Product*/,PaymentType
 					) L
 		ON K.CompanyId = L.CompanyId /*AND K.Product = L.Product*/ AND K.PaymentType = L.PaymentType /*AND K.CustomerType = L.CustomerType*/
