@@ -1292,8 +1292,8 @@ WITH  MonthVsParticipatedQTDPreviousNumber_CTE AS
 		,COALESCE((UUSemiYTD - A1.UUYTD	    + PreviousUUYTDBeforeSemiYTD	) * 1.0 / NULLIF(PreviousUUYTDBeforeSemiYTD	,0),0) [HourlyRetentionRateThisSemiYTDWithinTheYear]
 	FROM ReadyToUpdateDataToAnalyzingData					 A1
 	LEFT JOIN MonthVsParticipatedQTDPreviousNumber_CTE       B1 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B1.PaymentType AND A1.CompanyId = B1.CompanyId
-	LEFT JOIN MonthVsParticipatedSemiYTDPreviousNumber_CTE   B2 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B2.PaymentType AND A1.CompanyId = B2.CompanyId
-	LEFT JOIN MonthVsParticipatedYTDPreviousNumber_CTE	 B3 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B3.PaymentType AND A1.CompanyId = B3.CompanyId
+	LEFT JOIN MonthVsParticipatedSemiYTDPreviousNumber_CTE   B2 ON A1.JoinMeColumn = B2.JoinMeColumn AND A1.PaymentType = B2.PaymentType AND A1.CompanyId = B2.CompanyId
+	LEFT JOIN MonthVsParticipatedYTDPreviousNumber_CTE	 B3 ON A1.JoinMeColumn = B3.JoinMeColumn AND A1.PaymentType = B3.PaymentType AND A1.CompanyId = B3.CompanyId
 	LEFT JOIN QuarterVsParticipatedSemiYTDPreviousNumber_CTE B4 ON A1.JoinMeColumn = B4.JoinMeColumn AND A1.PaymentType = B4.PaymentType AND A1.CompanyId = B4.CompanyId
 	LEFT JOIN QuarterVsParticipatedYTDPreviousNumber_CTE	 B5 ON A1.JoinMeColumn = B5.JoinMeColumn AND A1.PaymentType = B5.PaymentType AND A1.CompanyId = B5.CompanyId
 	LEFT JOIN SemiYTDVsParticipatedYTDPreviousNumber_CTE	 B6 ON A1.JoinMeColumn = B6.JoinMeColumn AND A1.PaymentType = B6.PaymentType AND A1.CompanyId = B6.CompanyId
