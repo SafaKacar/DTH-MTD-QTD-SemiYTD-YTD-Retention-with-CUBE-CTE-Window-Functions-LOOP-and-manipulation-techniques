@@ -37,8 +37,8 @@ declare @DailySP as Date SET @DailySP = DATEADD(DAY,-@d,@BaseDay)
 		   BEGIN
 		   SET @m = @m + 1
 		   END
-		DECLARE @Param_MTDIndicator	    AS DATE =					 Dateadd(Day,1,EOMonth(dateadd(MONTH,-@m,@BaseDay))),
---				@Param_2MTDIndicator	AS DATE = DATEFROMPARTS(YEAR(Dateadd(day,-@m,@BaseDay)),(((MONTH(dateadd(day,-@m,@BaseDay)))-1)/2)*2+1,1),
+		DECLARE     @Param_MTDIndicator	    AS DATE =					 Dateadd(Day,1,EOMonth(dateadd(MONTH,-@m,@BaseDay))),
+--			    @Param_2MTDIndicator	AS DATE = DATEFROMPARTS(YEAR(Dateadd(day,-@m,@BaseDay)),(((MONTH(dateadd(day,-@m,@BaseDay)))-1)/2)*2+1,1),
 			    @Param_QTDIndicator	    AS DATE = DATEFROMPARTS(YEAR(Dateadd(day,-@m,@BaseDay)), ((MONTH(dateadd(day,-@m,@BaseDay)) -1)/3)*3+1,1),
 			    @Param_SemiYTDIndicator AS DATE = DATEFROMPARTS(YEAR(Dateadd(day,-@m,@BaseDay)),(((MONTH(dateadd(day,-@m,@BaseDay)))-1)/6)*6+1,1),
 			    @Param_YTDIndicator	    AS DATE = DATEFROMPARTS(YEAR(Dateadd(day,-@y,@BaseDay)),1,1)
@@ -71,15 +71,15 @@ WITH CustomerBasedCTE AS
 			   DATEFROMPARTS(YEAR(CreatedAt),(((MONTH(CreatedAt))-1)/6)*6+1,1) SemiYearIndicator
 			  ,DATEPART(q,CreatedAt)										 QuarterNumber
 			  ,cast(CreatedAt as date)			   							 [Date]
-			  ,dateadd(hour,(datepart(hour, DATEADD(HH,0,CreatedAt))),dateadd(day, 0, datediff(day,  0, CreatedAt)))	ContributedDateHour
+			  ,dateadd(hour,(datepart(hour, DATEADD(HH,0,CreatedAt))),dateadd(day, 0, datediff(day,  0, CreatedAt))) ContributedDateHour
 --			  ,DATEFROMPARTS(YEAR(CreatedAt),(((MONTH(CreatedAt))-1)/2)*2+1,1) Indicator_2MTD
 			  ,count(Id)							    TxCount
 			  ,sum(Amount)							    TotalVolume
-			  ,MAX(Age)									Age 
-			  ,MAX(TenureByYear)						TenureByYear
+			  ,MAX(Age)							    Age 
+			  ,MAX(TenureByYear)						    TenureByYear
 			  ,CustomerKey
 			  ,ISNULL(PaymentType	,10000)	PaymentType
-			  ,ISNULL(CompanyId		,10000)	CompanyId
+			  ,ISNULL(CompanyId	,10000)	CompanyId
 		--	  ,ISNULL(CustomerType			,10000)	CustomerType
 		--	  ,ISNULL(cast([Description] as VARCHAR(120)),'(Overall)') [Description]
 		from (
@@ -1273,27 +1273,27 @@ WITH  MonthVsParticipatedQTDPreviousNumber_CTE AS
 		 ,A1.AvgTenureByYearSemiYTD
 		 ,A1.AvgTenureByYearYTD
 		 ,A1.UUQTD	   - PreviousUUQTDBeforeMonth		 [HourlyContributerUUThisMonthToTheQuarter]
-		 ,A1.UUSemiYTD - PreviousUUSemiYTDBeforeMonth	 [HourlyContributerUUThisMonthToTheSemiYear]
+		 ,A1.UUSemiYTD     - PreviousUUSemiYTDBeforeMonth	 [HourlyContributerUUThisMonthToTheSemiYear]
 		 ,A1.UUYTD	   - PreviousUUYTDBeforeMonth		 [HourlyContributerUUThisMonthToTheYear]
-		 ,A1.UUSemiYTD - PreviousUUSemiYTDBeforeQuarter	 [HourlyContributerUUThisQuarterToTheSemiYear]
+		 ,A1.UUSemiYTD 	   - PreviousUUSemiYTDBeforeQuarter	 [HourlyContributerUUThisQuarterToTheSemiYear]
 		 ,A1.UUYTD	   - PreviousUUYTDBeforeQuarter		 [HourlyContributerUUThisQuarterToTheYear]
 		 ,A1.UUYTD	   - PreviousUUYTDBeforeSemiYTD		 [HourlyContributerUUThisSemiYTDToTheYear]
-		,	ISNULL(UUMTD - A1.UUQTD		+ PreviousUUQTDBeforeMonth		  ,NULL) [HourlyRetainedUUThisMonthWithinTheQuarter]
+		,	ISNULL(UUMTD - A1.UUQTD		+ PreviousUUQTDBeforeMonth	  ,NULL) [HourlyRetainedUUThisMonthWithinTheQuarter]
 		,	ISNULL(UUMTD - A1.UUSemiYTD + PreviousUUSemiYTDBeforeMonth	  ,NULL) [HourlyRetainedUUThisMonthWithinTheSemiYear]
-		,	ISNULL(UUMTD - A1.UUYTD		+ PreviousUUYTDBeforeMonth		  ,NULL) [HourlyRetainedUUThisMonthWithinTheYear]
-		,	ISNULL(UUQTD - A1.UUSemiYTD + PreviousUUSemiYTDBeforeQuarter  ,NULL) [HourlyRetainedUUThisQuarterWithinTheSemiYear]
+		,	ISNULL(UUMTD - A1.UUYTD		+ PreviousUUYTDBeforeMonth	  ,NULL) [HourlyRetainedUUThisMonthWithinTheYear]
+		,	ISNULL(UUQTD - A1.UUSemiYTD + PreviousUUSemiYTDBeforeQuarter  	  ,NULL) [HourlyRetainedUUThisQuarterWithinTheSemiYear]
 		,	ISNULL(UUQTD - A1.UUYTD		+ PreviousUUYTDBeforeQuarter	  ,NULL) [HourlyRetainedUUThisQuarterWithinTheYear]
 		,	ISNULL(UUSemiYTD - A1.UUYTD	+ PreviousUUYTDBeforeSemiYTD	  ,NULL) [HourlyRetainedUUThisSemiYearWithinTheYear]
 		,COALESCE((UUMTD - A1.UUQTD	    + PreviousUUQTDBeforeMonth		) * 1.0 / NULLIF(PreviousUUQTDBeforeMonth		,0),0) [HourlyRetentionRateThisMonthWithinTheQuarter]
-		,COALESCE((UUMTD - A1.UUSemiYTD + PreviousUUSemiYTDBeforeMonth  ) * 1.0 / NULLIF(PreviousUUSemiYTDBeforeMonth	,0),0) [HourlyRetentionRateThisMonthWithinTheSemiYear]
+		,COALESCE((UUMTD - A1.UUSemiYTD     + PreviousUUSemiYTDBeforeMonth  ) * 1.0 / NULLIF(PreviousUUSemiYTDBeforeMonth		,0),0) [HourlyRetentionRateThisMonthWithinTheSemiYear]
 		,COALESCE((UUMTD - A1.UUYTD	    + PreviousUUYTDBeforeMonth		) * 1.0 / NULLIF(PreviousUUYTDBeforeMonth		,0),0) [HourlyRetentionRateThisMonthWithinTheYear]
-		,COALESCE((UUQTD - A1.UUSemiYTD + PreviousUUSemiYTDBeforeQuarter) * 1.0 / NULLIF(PreviousUUSemiYTDBeforeQuarter	,0),0) [HourlyRetentionRateThisQuarterWithinTheSemiYear]
-		,COALESCE((UUQTD - A1.UUYTD		+ PreviousUUYTDBeforeQuarter	) * 1.0 / NULLIF(PreviousUUYTDBeforeQuarter	 	,0),0) [HourlyRetentionRateThisQuarterWithinTheYear]
-		,COALESCE((UUSemiYTD - A1.UUYTD	+ PreviousUUYTDBeforeSemiYTD	) * 1.0 / NULLIF(PreviousUUYTDBeforeSemiYTD	 	,0),0) [HourlyRetentionRateThisSemiYTDWithinTheYear]
+		,COALESCE((UUQTD - A1.UUSemiYTD     + PreviousUUSemiYTDBeforeQuarter) * 1.0 / NULLIF(PreviousUUSemiYTDBeforeQuarter		,0),0) [HourlyRetentionRateThisQuarterWithinTheSemiYear]
+		,COALESCE((UUQTD - A1.UUYTD	    + PreviousUUYTDBeforeQuarter	) * 1.0 / NULLIF(PreviousUUYTDBeforeQuarter	 	,0),0) [HourlyRetentionRateThisQuarterWithinTheYear]
+		,COALESCE((UUSemiYTD - A1.UUYTD	    + PreviousUUYTDBeforeSemiYTD	) * 1.0 / NULLIF(PreviousUUYTDBeforeSemiYTD	 	,0),0) [HourlyRetentionRateThisSemiYTDWithinTheYear]
 	FROM ReadyToUpdateDataToAnalyzingData					 A1
 	LEFT JOIN MonthVsParticipatedQTDPreviousNumber_CTE       B1 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B1.PaymentType AND A1.CompanyId = B1.CompanyId
 	LEFT JOIN MonthVsParticipatedSemiYTDPreviousNumber_CTE   B2 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B2.PaymentType AND A1.CompanyId = B2.CompanyId
-	LEFT JOIN MonthVsParticipatedYTDPreviousNumber_CTE	     B3 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B3.PaymentType AND A1.CompanyId = B3.CompanyId
+	LEFT JOIN MonthVsParticipatedYTDPreviousNumber_CTE	 B3 ON A1.JoinMeColumn = B1.JoinMeColumn AND A1.PaymentType = B3.PaymentType AND A1.CompanyId = B3.CompanyId
 	LEFT JOIN QuarterVsParticipatedSemiYTDPreviousNumber_CTE B4 ON A1.JoinMeColumn = B4.JoinMeColumn AND A1.PaymentType = B4.PaymentType AND A1.CompanyId = B4.CompanyId
 	LEFT JOIN QuarterVsParticipatedYTDPreviousNumber_CTE	 B5 ON A1.JoinMeColumn = B5.JoinMeColumn AND A1.PaymentType = B5.PaymentType AND A1.CompanyId = B5.CompanyId
 	LEFT JOIN SemiYTDVsParticipatedYTDPreviousNumber_CTE	 B6 ON A1.JoinMeColumn = B6.JoinMeColumn AND A1.PaymentType = B6.PaymentType AND A1.CompanyId = B6.CompanyId
